@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
     const loop = setInterval(() => {
         currentStep = (currentStep + 1) % 16; // Avanzar al siguiente paso
         io.emit('stepChanged', currentStep); // Emitir el paso actual a todos los clientes
-    }, 500); // Cambia el tiempo según la velocidad deseada
+    }, 80); // Cambia el tiempo según la velocidad deseada
 
     socket.on('disconnect', () => {
         connectedClients--; // Decrementar el contador al desconectar
