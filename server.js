@@ -24,15 +24,19 @@ app.use(express.static('public'));
 let currentStep = 0; // Paso actual
 let connectedClients = 0; // Contador de clientes conectados
 
-// Iniciar un bucle de reproducción en el servidor
-const loop = setInterval(() => {
+// Función para manejar el bucle de reproducción
+const startLoop = () => {
     currentStep = (currentStep + 1) % 16; // Avanzar al siguiente paso
     // io.emit('stepChanged', currentStep); // Emitir el paso actual a todos los clientes
 
     if (currentStep === 0) {
         io.emit('startSequence'); // Emitir señal de inicio de secuencia
     }
-}, 100); // Cambia el tiempo según la velocidad deseada
+    setTimeout(startLoop, 120); // Llamar a la función nuevamente después de 100 ms
+};
+
+// Iniciar el bucle de reproducción
+startLoop();
 
 // Configuración de Socket.IO
 io.on('connection', (socket) => {
