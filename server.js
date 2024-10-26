@@ -37,8 +37,8 @@ io.on('connection', (socket) => {
         currentStep = (currentStep + 1) % 16; // Avanzar al siguiente paso
         // io.emit('stepChanged', currentStep); // Emitir el paso actual a todos los clientes
         if (currentStep == 0) {
+            // console.log(currentStep)
             io.emit('startSequence'); // Emitir el paso actual a todos los clientes
-
         }
     }, 100); // Cambia el tiempo según la velocidad deseada
 
