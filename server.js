@@ -35,7 +35,11 @@ io.on('connection', (socket) => {
     // Iniciar un bucle de reproducción
     const loop = setInterval(() => {
         currentStep = (currentStep + 1) % 16; // Avanzar al siguiente paso
-        io.emit('stepChanged', currentStep); // Emitir el paso actual a todos los clientes
+        // io.emit('stepChanged', currentStep); // Emitir el paso actual a todos los clientes
+        if (currentStep == 0) {
+            io.emit('startSequence'); // Emitir el paso actual a todos los clientes
+
+        }
     }, 100); // Cambia el tiempo según la velocidad deseada
 
     socket.on('disconnect', () => {
