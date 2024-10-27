@@ -24,6 +24,13 @@ app.use(express.static('public'));
 let currentStep = 0; // Paso actual
 let connectedClients = 0; // Contador de clientes conectados
 
+
+let params = {
+    projectIndex: 0, // Valor inicial para projectIndex
+    volume: 0.50,
+    hola: 'chau'
+};
+
 // Función para manejar el bucle de reproducción
 const startLoop = () => {
     currentStep = (currentStep + 1) % 16; // Avanzar al siguiente paso
@@ -55,6 +62,18 @@ io.on('connection', (socket) => {
     //         io.emit('startSequence'); // Emitir el paso actual a todos los clientes
     //     }
     // }, 100); // Cambia el tiempo según la velocidad deseada
+
+    socket.on('getParams', (_params) => {
+        io.emit('params', params); // Devolver el objeto params al cliente
+        // console.log(_params)
+    });
+
+    socket.on('setParams', (_params) => {
+        // socket.emit('params', params); // Devolver el objeto params al cliente
+        console.log(_params)
+        params = _params
+        io.emit('paramsChanged', params)
+    });
 
     socket.on('disconnect', () => {
         connectedClients--; // Decrementar el contador al desconectar
